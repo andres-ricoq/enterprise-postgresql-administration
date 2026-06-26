@@ -1,42 +1,79 @@
 # Enterprise PostgreSQL Administration
 
-Proyecto desarrollado como solución al reto técnico DBA Semisenior, implementando actividades de administración, monitoreo, seguridad, automatización y continuidad operativa sobre PostgreSQL.
+Proyecto desarrollado como solución al Reto Técnico DBA Semisenior, implementando actividades de administración, monitoreo, seguridad, automatización, recuperación y continuidad operativa sobre PostgreSQL.
 
 ---
 
-## Tecnologías utilizadas
+## Autor
 
-- PostgreSQL 16
-- pgAdmin 4
-- Ubuntu 24.04 WSL2
-- Bash
-- Git y GitHub
-- Neon PostgreSQL
+**Andrés Rico Quintero**
 
 ---
 
-## Configuración del entorno
+# Tecnologías utilizadas
 
-### Instalación PostgreSQL
+* PostgreSQL 16
+* pgAdmin 4
+* Ubuntu 24.04 (WSL2)
+* Windows 11
+* Bash
+* Git y GitHub
+* Neon PostgreSQL Cloud
+
+---
+
+# Arquitectura de la solución
+
+```text
+Windows 11
+        │
+        ▼
+WSL2 Ubuntu 24.04
+        │
+        ▼
+PostgreSQL 16
+        │
+        ▼
+pgAdmin 4
+        │
+        ▼
+Neon PostgreSQL Cloud
+```
+
+---
+
+# Instalación del entorno
+
+Actualizar paquetes:
 
 ```bash
 sudo apt update
+sudo apt upgrade -y
+```
+
+Instalar PostgreSQL:
+
+```bash
 sudo apt install postgresql postgresql-contrib -y
 ```
 
-### Verificar servicio
+Verificar servicio:
 
 ```bash
 sudo service postgresql status
 ```
 
-### Configuración de acceso remoto
+---
+
+# Configuración de acceso remoto
 
 Archivo:
 
 ```text
 /etc/postgresql/16/main/postgresql.conf
 ```
+
+Configuración:
 
 ```conf
 listen_addresses='*'
@@ -48,89 +85,194 @@ Archivo:
 /etc/postgresql/16/main/pg_hba.conf
 ```
 
+Configuración:
+
 ```conf
 host all all 172.28.70.0/24 scram-sha-256
 ```
 
 ---
 
-## Modelo de datos
+# Modelo de datos
 
-La base de datos implementa un sistema de ventas compuesto por las siguientes tablas:
+La base de datos implementa un sistema de ventas compuesto por:
 
-- clientes
-- empleados
-- productos
-- ventas
-- detalle_venta
+* clientes
+* empleados
+* productos
+* ventas
+* detalle_venta
 
 Relaciones:
 
-- ventas → clientes
-- ventas → empleados
-- detalle_venta → ventas
-- detalle_venta → productos
+* ventas → clientes
+* ventas → empleados
+* detalle_venta → ventas
+* detalle_venta → productos
 
 ---
 
-## Estructura del proyecto
+# Funcionalidades implementadas
+
+* Administración de PostgreSQL.
+* Configuración del servidor.
+* SQL avanzado.
+* Procedimientos almacenados.
+* Optimización de consultas.
+* Índices.
+* Monitoreo.
+* Seguridad.
+* Auditoría.
+* Backups.
+* Recuperación.
+* Automatización.
+* Base de datos en la nube.
+* Soporte e incidencias.
+
+---
+
+# Scripts SQL
+
+| Archivo               | Descripción                  |
+| --------------------- | ---------------------------- |
+| 01_tablas.sql         | Creación del modelo de datos |
+| 02_inserts.sql        | Datos iniciales              |
+| 03_consultas.sql      | SQL avanzado                 |
+| 04_procedimientos.sql | Procedimientos almacenados   |
+| 05_indices.sql        | Índices                      |
+| 06_roles.sql          | Roles y permisos             |
+| 07_mantenimiento.sql  | Mantenimiento                |
+| 08_monitoreo.sql      | Monitoreo                    |
+| 09_seguridad.sql      | Seguridad                    |
+
+---
+
+# Automatización
+
+Script:
 
 ```text
-sql/
-scripts/
-docs/
-evidencias/
-presentacion/
+scripts/backup.sh
+```
+
+Funciones:
+
+* Backup automático.
+* Registro de logs.
+* Reporte de tamaño de tablas.
+* Detección de errores.
+
+---
+
+# Programación de tareas
+
+Configuración cron:
+
+```text
+0 2 * * * /home/dbaadmin/backup.sh
 ```
 
 ---
 
-## Scripts incluidos
+# Recuperación
 
-| Archivo | Descripción |
-|--------|-------------|
-| backup.sh | Generación automática de respaldos |
-| 01_tablas.sql | Creación de tablas |
-| 02_inserts.sql | Datos iniciales |
-| 03_consultas.sql | SQL avanzado |
-| 04_procedimientos.sql | Procedimientos almacenados |
-| 05_indices.sql | Índices y mantenimiento |
-| 06_roles.sql | Seguridad y permisos |
+Restauración:
 
----
+```bash
+sudo -u postgres psql empresa_ventas < backup.sql
+```
 
-## Referencia a los puntos del reto
+RTO alcanzado: 3 minutos.
 
-| Punto | Implementación |
-|------|---------------|
-| 1 | Administración de bases de datos |
-| 2 | SQL avanzado |
-| 3 | Backup y recuperación |
-| 4 | Monitoreo |
-| 5 | Automatización |
-| 6 | Seguridad |
-| 7 | Soporte e incidentes |
-| 8 | Base de datos en la nube |
-| 9 | Documentación |
-| 10 | Entregables |
+RPO alcanzado: 15 horas.
 
 ---
 
-## Base de datos en la nube
+# Monitoreo
 
-Se implementó una instancia PostgreSQL administrada mediante Neon.
+Herramientas utilizadas:
+
+* pg_stat_activity
+* pg_stat_database
+* Dashboard pgAdmin
+
+Consultas:
+
+```sql
+SELECT * FROM pg_stat_activity;
+```
+
+---
+
+# Seguridad
+
+Implementaciones:
+
+* Contraseñas robustas.
+* Restricción por IP.
+* Roles separados.
+* Principio de mínimo privilegio.
+* Auditoría.
+* SSL/TLS.
+
+---
+
+# Base de datos en la nube
+
+Proveedor:
+
+**Neon PostgreSQL**
 
 Características:
 
-- Conexión SSL.
-- Administración remota.
-- Acceso desde pgAdmin.
-- Monitoreo integrado.
+* PostgreSQL administrado.
+* Conexiones SSL/TLS.
+* Administración remota.
+* Acceso mediante pgAdmin.
+* Monitoreo integrado.
+
+Parámetros de conexión:
+
+```text
+Host: ep-xxxxxxxx.us-east-1.aws.neon.tech
+Puerto: 5432
+SSL: require
+Cliente: pgAdmin 4
+```
+
+Por motivos de seguridad no se publican credenciales de acceso.
 
 ---
 
-## Autor
+# Estructura del proyecto
 
-Andrés Rico Quintero
+```text
+docs/
+evidencias/
+presentacion/
+scripts/
+sql/
+README.md
+```
 
-Reto Técnico DBA Semisenior.
+---
+
+# Relación con la prueba técnica
+
+| Punto                 | Estado |
+| --------------------- | ------ |
+| Administración        | ✔      |
+| SQL Avanzado          | ✔      |
+| Backup y Recovery     | ✔      |
+| Monitoreo             | ✔      |
+| Automatización        | ✔      |
+| Seguridad             | ✔      |
+| Soporte e incidencias | ✔      |
+| Nube                  | ✔      |
+| Documentación         | ✔      |
+
+---
+
+# Repositorio
+
+https://github.com/andres-ricoq/enterprise-postgresql-administration
