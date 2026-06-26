@@ -1,0 +1,16 @@
+# Archivos de logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.sql~
+
+# Configuración local de VS Code
+.vscode/
+
+# Python
+__pycache__/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
