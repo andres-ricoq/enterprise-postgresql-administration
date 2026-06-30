@@ -271,8 +271,3 @@ README.md
 | Nube                  | ✔      |
 | Documentación         | ✔      |
 
----
-
-# Repositorio
-
-https://github.com/andres-ricoq/enterprise-postgresql-administration
